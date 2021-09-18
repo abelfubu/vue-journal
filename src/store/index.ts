@@ -1,11 +1,12 @@
-import Vue from "vue";
-import Vuex from "vuex";
+import daybookStore from '@/modules/daybook/store';
+import Vue from 'vue';
+import Vuex from 'vuex';
+import { extractVuexModule } from 'vuex-class-component';
 
 Vue.use(Vuex);
 
 export default new Vuex.Store({
-  state: {},
-  mutations: {},
-  actions: {},
-  modules: {},
+  modules: {
+    ...extractVuexModule(daybookStore),
+  },
 });
