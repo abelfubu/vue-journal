@@ -1,7 +1,6 @@
 <template>
   <div class="home">
     <img alt="Vue logo" src="../assets/logo.png" />
-    <p>{{ count }}</p>
   </div>
 </template>
 
@@ -11,7 +10,5 @@
   @Component({
     components: {},
   })
-  export default class Home extends Vue {
-    count = this.$store.state.count;
-  }
+  export default class Home extends Vue {}
 </script>

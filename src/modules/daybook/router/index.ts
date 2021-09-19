@@ -10,11 +10,14 @@ const childrenRoutes: RouteConfig[] = [
   {
     path: ':id',
     name: 'EntryView',
-    component: () => import(/* webpackChunkName: "daybook-no-entry" */ '../views/EntryView.vue'),
+    component: () =>
+      import(/* webpackChunkName: "daybook-no-entry" */ '../views/EntryView.vue'),
+    props: route => ({ id: route.params.id }),
   },
 ];
 
 export const daybookRouter: Partial<RouteConfig> = {
-  component: () => import(/* webpackChunkName: "daybook" */ '../layouts/DaybookLayout.vue'),
+  component: () =>
+    import(/* webpackChunkName: "daybook" */ '../layouts/DaybookLayout.vue'),
   children: childrenRoutes,
 };

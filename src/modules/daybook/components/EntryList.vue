@@ -1,14 +1,21 @@
 <template>
   <div class="entrylist-container">
-    <input type="text" placeholder="Search" />
+    <input type="text" placeholder="Search" v-model="term" />
     <ul>
-      <Entry v-for="link in 100" @click.native="onEntryClicked(link)" :key="link">Entry</Entry>
+      <Entry
+        v-for="entry in entries"
+        @click.native="onEntryClicked(entry.id)"
+        :key="entry.id"
+        :entry="entry"
+      />
     </ul>
   </div>
 </template>
 
 <script lang="ts">
-  import { Component, Vue } from 'vue-property-decorator';
+  import { Component, Vue, Watch } from 'vue-property-decorator';
+  import vxm from '@/store/vxm';
+  import { Entry } from '@/models/entry';
 
   @Component({
     components: {
@@ -16,9 +23,24 @@
     },
   })
   export default class EntryList extends Vue {
-    onEntryClicked(link: number): void {
-      const params = { id: String(link) };
+    entries: Entry[] = [];
+    term = '';
+    debounceTimeout?: number;
+
+    @Watch('term') onTermChanged(): void {
+      if (this.debounceTimeout) clearTimeout(this.debounceTimeout);
+      this.debounceTimeout = setTimeout(() => {
+        this.entries = vxm.journal.entriesByTerm(this.term);
+      }, 400);
+    }
+
+    onEntryClicked(entryId: string): void {
+      const params = { id: String(entryId) };
       this.$router.push({ name: 'EntryView', params });
+    }
+
+    mounted(): void {
+      this.entries = vxm.journal.entriesByTerm(this.term);
     }
   }
 </script>
@@ -26,6 +48,7 @@
 <style scoped lang="scss">
   .entrylist-container {
     border: 1px solid #ccc;
+    min-height: calc(100vh - 4rem);
   }
 
   input {
@@ -33,7 +56,7 @@
     border-bottom: 1px solid #ccc;
     font-size: 1.1rem;
     outline: none;
-    padding: 0.5rem;
+    padding: 0.95rem 0.5rem;
     padding-left: 1rem;
     width: 100%;
   }

@@ -3,7 +3,7 @@
     <img src="@/assets/logo.png" alt="Logo" />
     <ul>
       <li v-for="({ path, name }, index) in navigation" :key="index">
-        <router-link :exact-active-class="$style.active" :to="path"> {{ name }}</router-link>
+        <router-link :active-class="$style.active" :to="path"> {{ name }}</router-link>
       </li>
     </ul>
   </header>

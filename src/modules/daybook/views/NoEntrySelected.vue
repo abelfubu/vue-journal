@@ -11,7 +11,7 @@
 
   @Component({
     components: {
-      Fab: () => import('../components/Fab.vue'),
+      Fab: () => import('../../shared/components/ui/Fab.vue'),
     },
   })
   export default class NoEntrySelected extends Vue {

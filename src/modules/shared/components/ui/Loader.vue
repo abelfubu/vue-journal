@@ -1,0 +1,64 @@
+<template>
+  <div class="backdrop">
+    <div class="lds-facebook">
+      <div></div>
+      <div></div>
+      <div></div>
+    </div>
+  </div>
+</template>
+
+<style lang="scss" scoped>
+  .backdrop {
+    background-color: var(--secondary);
+    inset: 0;
+    opacity: 0.3;
+    position: fixed;
+  }
+
+  .lds-facebook {
+    display: inline-block;
+    height: 80px;
+    left: 50%;
+    position: absolute;
+    top: 40%;
+    transform: translate(50%, 50%);
+    width: 80px;
+  }
+
+  .lds-facebook div {
+    animation: lds-facebook 1.2s cubic-bezier(0, 0.5, 0.5, 1) infinite;
+    background: var(--primary);
+    display: inline-block;
+    left: 8px;
+    position: absolute;
+    width: 16px;
+  }
+
+  .lds-facebook div:nth-child(1) {
+    animation-delay: -0.24s;
+    left: 8px;
+  }
+
+  .lds-facebook div:nth-child(2) {
+    animation-delay: -0.12s;
+    left: 32px;
+  }
+
+  .lds-facebook div:nth-child(3) {
+    animation-delay: 0;
+    left: 56px;
+  }
+  @keyframes lds-facebook {
+    0% {
+      height: 64px;
+      top: 8px;
+    }
+
+    50%,
+    100% {
+      height: 32px;
+      top: 24px;
+    }
+  }
+</style>
