@@ -1,7 +1,10 @@
 <template>
   <div>
     <h1>No hay nada seleccionado</h1>
-    <Fab :type="fabType.ADD" />
+    <Fab
+      @click.native="$router.push({ name: 'EntryView', params: { id: 'NEW' } })"
+      :type="fabType.ADD"
+    />
   </div>
 </template>
 

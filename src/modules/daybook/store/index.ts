@@ -1,6 +1,6 @@
 import { EntriesApiResponse, Entry } from '@/models/entry';
 import { createModule, mutation, action } from 'vuex-class-component';
-import entriesApi from '../api/entriesApi';
+import entriesApi from '../../../api/entriesApi';
 
 const VuexModule = createModule({
   namespaced: 'user',
@@ -39,11 +39,37 @@ export default class DaybookStore extends VuexModule {
     }
   }
 
+  @action async createEntry({ text, picture, date }: Entry): Promise<string> {
+    this.toggleIsLoading();
+    try {
+      const entry = { text, picture, date };
+      const response = await entriesApi.post(`/entries.json`, entry);
+      this.entries = [{ id: response.data.name, ...entry }, ...this.entries];
+      return response.data.name;
+    } catch (error) {
+      throw new Error(String(error));
+    } finally {
+      this.toggleIsLoading();
+    }
+  }
+
   @action async saveEntry({ id, ...entry }: Entry): Promise<void> {
     this.toggleIsLoading();
     try {
       const response = await entriesApi.put(`/entries/${id}.json`, entry);
       this.updateEntry({ id, ...response.data });
+    } catch (error) {
+      throw new Error(String(error));
+    } finally {
+      this.toggleIsLoading();
+    }
+  }
+
+  @action async deleteEntry(id: string): Promise<void> {
+    this.toggleIsLoading();
+    try {
+      await entriesApi.delete(`/entries/${id}.json`);
+      this.entries = this.entries.filter(entry => entry.id !== id);
     } catch (error) {
       throw new Error(String(error));
     } finally {
