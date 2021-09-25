@@ -1,24 +1,23 @@
 <template>
   <div>
     <h1>No hay nada seleccionado</h1>
-    <Fab
-      @click.native="$router.push({ name: 'EntryView', params: { id: 'NEW' } })"
-      :type="fabType.ADD"
-    />
+    <Fab @click.native="$router.push(entryViewRoute)">
+      <AddIcon />
+    </Fab>
   </div>
 </template>
 
 <script lang="ts">
-  import { FabType } from '@/models/fabtype';
   import { Component, Vue } from 'vue-property-decorator';
 
   @Component({
     components: {
-      Fab: () => import('../../shared/components/ui/Fab.vue'),
+      Fab: () => import('@/modules/shared/components/ui/Fab.vue'),
+      AddIcon: () => import('@/modules/shared/components/icons/AddIcon.vue'),
     },
   })
   export default class NoEntrySelected extends Vue {
-    fabType = FabType;
+    entryViewRoute = { name: 'EntryView', params: { id: 'NEW' } };
   }
 </script>
 

@@ -6,5 +6,5 @@
   "printWidth": 90,
   "vueIndentScriptAndStyle": true,
   "quoteProps": "consistent",
-  "arrowParens": "avoid"
+  "arrowParens": "always"
 }

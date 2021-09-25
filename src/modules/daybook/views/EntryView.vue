@@ -21,19 +21,22 @@
     <input @change="onFilePicked" type="file" ref="fileInput" hidden />
     <Fab
       @click.native="onFileInputClick()"
-      :type="fabType.UPLOAD"
       :position="{ bottom: '5rem' }"
       bgColor="var(--primary)"
-    />
-    <Fab v-if="id === 'NEW'" @click.native="createEntry" :type="fabType.EDIT" />
+    >
+      <UploadIcon />
+    </Fab>
+    <Fab v-if="isNewId" @click.native="createEntry">
+      <EditIcon />
+    </Fab>
     <template v-else>
-      <Fab @click.native="saveEntry" :type="fabType.EDIT" />
+      <Fab @click.native="saveEntry"><EditIcon /></Fab>
       <Fab
         @click.native="deleteEntry"
-        :type="fabType.DELETE"
         :position="{ bottom: '8rem' }"
         bgColor="var(--warn)"
-      />
+        ><DeleteIcon
+      /></Fab>
     </template>
   </div>
 </template>
@@ -50,6 +53,9 @@
   @Component({
     components: {
       Fab: () => import('../../shared/components/ui/Fab.vue'),
+      UploadIcon: () => import('../../shared/components/icons/UploadIcon.vue'),
+      EditIcon: () => import('../../shared/components/icons/EditIcon.vue'),
+      DeleteIcon: () => import('../../shared/components/icons/DeleteIcon.vue'),
     },
   })
   export default class EntryView extends Vue {
@@ -66,6 +72,10 @@
 
     @Watch('entry.date') onDateChange(): void {
       this.date = this.onEntryChange();
+    }
+
+    get isNewId(): boolean {
+      return this.id === 'NEW';
     }
 
     onEntryChange(): string {

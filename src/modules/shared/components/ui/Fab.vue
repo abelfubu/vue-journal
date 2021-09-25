@@ -1,36 +1,20 @@
 <template>
   <button :style="{ ...position, backgroundColor: bgColor }">
-    <AddIcon v-if="type === fabType.ADD" />
-    <EditIcon v-else-if="type === fabType.EDIT" />
-    <UploadIcon v-else-if="type === fabType.UPLOAD" />
-    <DeleteIcon v-else-if="type === fabType.DELETE" />
+    <slot></slot>
   </button>
 </template>
 
 <script lang="ts">
   import { AbsolutePosition } from '@/models/absolute-position';
-  import { FabType } from '@/models/fabtype';
   import { Component, Prop, Vue } from 'vue-property-decorator';
 
-  @Component({
-    components: {
-      AddIcon: () => import('../icons/AddIcon.vue'),
-      EditIcon: () => import('../icons/EditIcon.vue'),
-      UploadIcon: () => import('../icons/UploadIcon.vue'),
-      DeleteIcon: () => import('../icons/DeleteIcon.vue'),
-    },
-  })
+  @Component
   export default class Fab extends Vue {
-    @Prop({ default: 'add', type: Number })
-    type!: FabType;
-
     @Prop({ default: () => ({}), type: Object })
     position!: Partial<AbsolutePosition>;
 
     @Prop({ default: 'var(--secondary)', type: String })
     bgColor?: string;
-
-    fabType = FabType;
   }
 </script>
 
